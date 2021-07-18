@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\v1\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\Person;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\PersonResourceCollection;
 
 class PersonController extends Controller
 {
@@ -12,9 +14,9 @@ class PersonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index() : PersonResourceCollection
     {
-        //
+        return new PersonResourceCollection(Person::paginate());
     }
 
     /**
@@ -25,7 +27,7 @@ class PersonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
