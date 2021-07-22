@@ -14,9 +14,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 
-Route::apiResource('/people', App\Http\Controllers\v1\Api\PersonController::class);
+// Route::apiResource('/people', App\Http\Controllers\v1\Api\PersonController::class);
+Route::post('/register', 'App\Http\Controllers\UserController@register');
+Route::post('login', 'App\Http\Controllers\Auth\AuthController@login');
+
+// Route::group([
+
+//     'middleware' => 'api',
+//     'prefix' => 'auth'
+
+// ], function ($router) {
+
+//     Route::post('login', 'App\Http\Controllers\Auth\AuthController');
+//     Route::post('logout', 'AuthController@logout');
+//     Route::post('refresh', 'AuthController@refresh');
+//     Route::post('me', 'AuthController@me');
+// });
+
+
+// Route::group(["middleware" => "auth.jwt"], function () {
+//     Route::get("logout", "AuthController@logout");
+//     Route::resource("tasks", "TaskController");
+// });

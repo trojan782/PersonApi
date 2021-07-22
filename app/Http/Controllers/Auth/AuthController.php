@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public $loginAfterSignUp = true;
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login']]);
@@ -50,7 +51,6 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' => Auth::factory()->getTTL() * 60
             // 'expires_in' => auth()->factory()->getTTL() * 60,
-
         ]);
     }
 
