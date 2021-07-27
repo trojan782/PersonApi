@@ -49,9 +49,9 @@ class PersonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id) : PersonResource
     {
-        //
+        return new PersonResource(Person::find($id)->update($request->all()));
     }
 
     /**
@@ -62,6 +62,10 @@ class PersonController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $person = Person::find($id);
+        $person->delete();
+        return response([
+            'message' => 'Person deleted successfully'
+        ]);
     }
 }
