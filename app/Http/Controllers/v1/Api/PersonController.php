@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\v1\Api;
 
+use App\Http\Resources\v1\PersonResource;
 use App\Models\Person;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -27,7 +28,7 @@ class PersonController extends Controller
      */
     public function store(Request $request)
     {
-        
+
     }
 
     /**
@@ -36,9 +37,9 @@ class PersonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id) : PersonResource
     {
-        //
+        return new PersonResource(Person::find($id));
     }
 
     /**
