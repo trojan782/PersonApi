@@ -10,17 +10,33 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public $loginAfterSignUp = true;
+//    public $loginAfterSignUp = true;
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
-    public function login()
-    {
-        $credentials = request(['email', 'password']);
+    // public function login()
+    // {
+    //     $credentials = request(['email', 'password']);
 
-        if (!$token = Auth::attempt($credentials)) {
+    //     if (!$token = Auth::attempt($credentials)) {
+    //         return response()->json(['error' => 'Unauthorized'], 401);
+    //     }
+
+    //     return $this->respondWithToken($token);
+    // }
+    public function login(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        if (! $token = auth()->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -49,8 +65,8 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => Auth::factory()->getTTL() * 60
-            // 'expires_in' => auth()->factory()->getTTL() * 60,
+            'user' => Auth::user(),
+            'expires_in' => auth()->factory()->getTTL() * 60,
         ]);
     }
 
@@ -59,13 +75,13 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required | min:4',
             'email' => 'required  | string | email',
-            'password' => 'required | min:6 '
+            'password' => 'required | min:6 | confirmed'
         ]);
 
         $user = User::create($request->all());
 
         return response([
-            'message' => 'User has been created succcessfully!',
+            'message' => 'User has been created successfully!',
             'user' => $user
         ], 201);
     }
