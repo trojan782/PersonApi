@@ -20,24 +20,37 @@ use Illuminate\Support\Facades\Route;
 
 
 // Route::apiResource('/people', App\Http\Controllers\v1\Api\PersonController::class);
-Route::post('/register', 'App\Http\Controllers\UserController@register');
-Route::post('login', 'App\Http\Controllers\Auth\AuthController@login');
+//Route::post('/register', 'App\Http\Controllers\Auth\AuthController@register');
+//Route::post('/login', 'App\Http\Controllers\Auth\AuthController@login');
+//Route::get('/people', 'App\Http\Controllers\v1\Api\PersonController@index');
+//Route::group(["middleware" => "auth:api"], function() {
+//    Route::apiResource('/people', App\Http\Controllers\v1\Api\PersonController::class);
+//});
 
-// Route::group([
+Route::post('/login', 'App\Http\Controllers\Auth\AuthController@login')->name('login');
+Route::post('/register', 'App\Http\Controllers\Auth\AuthController@register')->name('register');
 
-//     'middleware' => 'api',
-//     'prefix' => 'auth'
-
-// ], function ($router) {
-
-//     Route::post('login', 'App\Http\Controllers\Auth\AuthController');
-//     Route::post('logout', 'AuthController@logout');
-//     Route::post('refresh', 'AuthController@refresh');
-//     Route::post('me', 'AuthController@me');
-// });
+//Route::post('/register', 'App\Http\Controllers\Auth\AuthController@register')->name('register');
+ Route::apiResource('/people', App\Http\Controllers\v1\Api\PersonController::class);
+// Route::apiResource('/auth', App\Http\Controllers\Auth\AuthController::class);
 
 
 // Route::group(["middleware" => "auth.jwt"], function () {
 //     Route::get("logout", "AuthController@logout");
 //     Route::resource("tasks", "TaskController");
 // });
+
+//Route::group([
+//    'middleware' => 'api',
+////    'prefix' => 'auth'
+//
+//], function ($router) {
+//    Route::post('/login', 'App\Http\Controllers\Auth\AuthController@login');
+//    Route::post('/register', 'App\Http\Controllers\Auth\AuthController@register');
+//    Route::post('/logout', 'App\Http\Controllers\Auth\AuthController@logout');
+//    Route::post('/refresh', 'App\Http\Controllers\Auth\AuthController@refresh');
+//    Route::get('/person', 'App\Http\Contollers\v1\Api\PersonController@show');
+//});
+
+
+
